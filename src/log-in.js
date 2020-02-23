@@ -44,7 +44,7 @@ const LogInForm = ({
   </div>
 );
 
-const LogInFormContainer = () => {
+const LogInFormContainer = ({ history }) => {
   const firebase = useFirebase();
 
   const [email, setEmail] = useState("");
@@ -64,9 +64,7 @@ const LogInFormContainer = () => {
     firebase
       .logIn({ email, password })
       .then(() => {
-        setEmail("");
-        setPassword("");
-        setError(null);
+        history.push("/scale");
       })
       .catch(({ message }) => {
         setError(message);

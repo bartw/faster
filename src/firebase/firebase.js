@@ -15,18 +15,26 @@ class Firebase {
     this.user = null;
 
     this.auth.onAuthStateChanged(user => {
-      console.log('onAuth')
       this.user = user ? user : null;
     });
   }
 
   signUp = ({ email, password }) =>
-    this.auth.createUserWithEmailAndPassword(email, password);
+    this.auth.createUserWithEmailAndPassword(email, password).then(user => {
+      this.user = user;
+      return user;
+    });
 
   logIn = ({ email, password }) =>
-    this.auth.signInWithEmailAndPassword(email, password);
+    this.auth.signInWithEmailAndPassword(email, password).then(user => {
+      this.user = user;
+      return user;
+    });
 
-  logOut = () => this.auth.signOut();
+  logOut = () =>
+    this.auth.signOut().then(() => {
+      this.user = null;
+    });
 
   resetPassword = email => this.auth.sendPasswordResetEmail(email);
 

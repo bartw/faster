@@ -55,7 +55,7 @@ const SignUpForm = ({
   </div>
 );
 
-const SignUpFormContainer = () => {
+const SignUpFormContainer = ({ history }) => {
   const firebase = useFirebase();
 
   const [email, setEmail] = useState("");
@@ -81,10 +81,7 @@ const SignUpFormContainer = () => {
     firebase
       .signUp({ email, password })
       .then(() => {
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-        setError(null);
+        history.push("/scale");
       })
       .catch(({ message }) => {
         setError(message);
