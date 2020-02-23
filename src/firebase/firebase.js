@@ -1,5 +1,6 @@
 import app from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -13,6 +14,7 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
     this.auth = app.auth();
+    this.db = app.firestore();
     this.user = null;
 
     this.auth.onAuthStateChanged(user => {
@@ -42,6 +44,33 @@ class Firebase {
   updatePassword = password => this.auth.currentUser.updatePassword(password);
 
   getUser = () => (this.user ? { ...this.user } : null);
+
+  addWeight = ({ weight }) => {
+    const newWeight = {
+      weight,
+      timestamp: app.firestore.Timestamp.fromDate(new Date()),
+      userId: this.user.uid
+    };
+    console.log(newWeight);
+    return this.db.collection("weights").add(newWeight);
+  };
+
+  getWeights = () =>
+    this.db
+      .collection("weights")
+      .where("userId", "==", this.user.uid)
+      .orderBy("timestamp", "desc")
+      .limit(10)
+      .get()
+      .then(snapshot =>
+        snapshot.docs.map(doc => {
+          const { weight, timestamp } = doc.data();
+          return {
+            weight,
+            timestamp: timestamp.toDate()
+          };
+        })
+      );
 }
 
 export default Firebase;
