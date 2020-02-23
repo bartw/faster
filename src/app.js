@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Firebase, { FirebaseContext } from "./firebase";
+import ProtectedRoute from "./protected-route";
 import Layout from "./layout";
 import Scale from "./scale";
 import SignUp from "./sign-up";
@@ -13,18 +14,10 @@ const App = () => {
       <Router>
         <Layout>
           <Switch>
-            <Route path="/scale">
-              <Scale />
-            </Route>
-            <Route path="/sign-up">
-              <SignUp />
-            </Route>
-            <Route path="/log-in">
-              <LogIn />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
+            <ProtectedRoute path="/scale" component={Scale} />
+            <Route path="/sign-up" component={SignUp} />
+            <Route path="/log-in" component={LogIn} />
+            <Route path="/" component={Home} />
           </Switch>
         </Layout>
       </Router>

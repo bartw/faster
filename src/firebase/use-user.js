@@ -3,7 +3,7 @@ import useFirebase from "./use-firebase";
 
 const useUser = () => {
   const firebase = useFirebase();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(firebase.getUser());
 
   useEffect(
     () =>

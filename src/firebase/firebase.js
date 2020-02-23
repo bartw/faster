@@ -12,6 +12,12 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
     this.auth = app.auth();
+    this.user = null;
+
+    this.auth.onAuthStateChanged(user => {
+      console.log('onAuth')
+      this.user = user ? user : null;
+    });
   }
 
   signUp = ({ email, password }) =>
@@ -25,6 +31,8 @@ class Firebase {
   resetPassword = email => this.auth.sendPasswordResetEmail(email);
 
   updatePassword = password => this.auth.currentUser.updatePassword(password);
+
+  getUser = () => (this.user ? { ...this.user } : null);
 }
 
 export default Firebase;
