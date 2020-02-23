@@ -3,33 +3,39 @@ import { Link } from "react-router-dom";
 import { useUser } from "./firebase";
 import LogOutButton from "./log-out-button";
 
+const NavItem = ({ children }) => (
+  <li className="inline-block mr-4" style={{ fontVariant: "small-caps" }}>
+    {children}
+  </li>
+);
+
 const Nav = () => {
   const user = useUser();
 
   return (
-    <nav>
+    <nav className="my-4">
       <ul>
-        <li>
+        <NavItem>
           <Link to="/">Home</Link>
-        </li>
+        </NavItem>
         {!!user && (
           <>
-            <li>
+            <NavItem>
               <Link to="/scale">Scale</Link>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <LogOutButton />
-            </li>
+            </NavItem>
           </>
         )}
         {!user && (
           <>
-            <li>
+            <NavItem>
               <Link to="/sign-up">Sign up</Link>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <Link to="/log-in">Log in</Link>
-            </li>
+            </NavItem>
           </>
         )}
       </ul>

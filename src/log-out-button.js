@@ -5,7 +5,11 @@ const LogOutButton = () => {
   const firebase = useFirebase();
 
   return (
-    <button type="button" onClick={() => firebase.logOut()}>
+    <button
+      type="button"
+      onClick={() => firebase.logOut()}
+      style={{ fontVariant: "small-caps" }}
+    >
       Log out
     </button>
   );

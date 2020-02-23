@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useFirebase } from "./firebase";
+import FormElement from "./form-element";
+import Button from "./button";
+import Input from "./input";
 
 const SignUpForm = ({
   email,
@@ -19,31 +22,34 @@ const SignUpForm = ({
         onSubmit();
       }}
     >
-      <input
-        type="email"
-        value={email}
-        onChange={e => {
-          setEmail(e.currentTarget.value);
-        }}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={e => {
-          setPassword(e.currentTarget.value);
-        }}
-        placeholder="Password"
-      />
-      <input
-        type="password"
-        value={confirmPassword}
-        onChange={e => {
-          setConfirmPassword(e.currentTarget.value);
-        }}
-        placeholder="Confirm password"
-      />
-      <button type="submit">Sign up</button>
+      <FormElement label="Email" htmlFor="email">
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          onChange={setEmail}
+          placeholder="Email"
+        />
+      </FormElement>
+      <FormElement label="Password" htmlFor="password">
+        <Input
+          id="password"
+          type="password"
+          value={password}
+          onChange={setPassword}
+          placeholder="Password"
+        />
+      </FormElement>
+      <FormElement label="Confirm password" htmlFor="confirmPassword">
+        <Input
+          id="confirmPassword"
+          type="password"
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+          placeholder="Confirm password"
+        />
+      </FormElement>
+      <Button type="submit">Sign up</Button>
       {error && <div>{error}</div>}
     </form>
   </div>

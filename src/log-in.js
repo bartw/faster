@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useFirebase } from "./firebase";
+import FormElement from "./form-element";
+import Button from "./button";
+import Input from "./input";
 
 const LogInForm = ({
   email,
@@ -17,23 +20,25 @@ const LogInForm = ({
         onSubmit();
       }}
     >
-      <input
-        type="email"
-        value={email}
-        onChange={e => {
-          setEmail(e.currentTarget.value);
-        }}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={e => {
-          setPassword(e.currentTarget.value);
-        }}
-        placeholder="Password"
-      />
-      <button type="submit">Log in</button>
+      <FormElement label="Email" htmlFor="email">
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          onChange={setEmail}
+          placeholder="Email"
+        />
+      </FormElement>
+      <FormElement label="Password" htmlFor="password">
+        <Input
+          id="password"
+          type="password"
+          value={password}
+          onChange={setPassword}
+          placeholder="Password"
+        />
+      </FormElement>
+      <Button type="submit">Log in</Button>
       {!!error && <div>{error}</div>}
     </form>
   </div>
