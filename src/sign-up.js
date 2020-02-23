@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { FirebaseContext } from "./firebase";
+import React, { useState } from "react";
+import { useFirebase } from "./firebase";
 
 const SignUpForm = ({
   email,
@@ -50,7 +50,7 @@ const SignUpForm = ({
 );
 
 const SignUpFormContainer = () => {
-  const firebase = useContext(FirebaseContext);
+  const firebase = useFirebase();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
