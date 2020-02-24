@@ -12,36 +12,33 @@ const LogInForm = ({
   onSubmit,
   error
 }) => (
-  <div>
-    <h2>Log in</h2>
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        onSubmit();
-      }}
-    >
-      <FormElement label="Email" htmlFor="email">
-        <Input
-          id="email"
-          type="email"
-          value={email}
-          onChange={setEmail}
-          placeholder="Email"
-        />
-      </FormElement>
-      <FormElement label="Password" htmlFor="password">
-        <Input
-          id="password"
-          type="password"
-          value={password}
-          onChange={setPassword}
-          placeholder="Password"
-        />
-      </FormElement>
-      <Button type="submit">Log in</Button>
-      {!!error && <div>{error}</div>}
-    </form>
-  </div>
+  <form
+    onSubmit={e => {
+      e.preventDefault();
+      onSubmit();
+    }}
+  >
+    <FormElement label="Email" htmlFor="email">
+      <Input
+        id="email"
+        type="email"
+        value={email}
+        onChange={setEmail}
+        placeholder="Email"
+      />
+    </FormElement>
+    <FormElement label="Password" htmlFor="password">
+      <Input
+        id="password"
+        type="password"
+        value={password}
+        onChange={setPassword}
+        placeholder="Password"
+      />
+    </FormElement>
+    <Button type="submit">Log in</Button>
+    {!!error && <div>{error}</div>}
+  </form>
 );
 
 const LogInFormContainer = ({ history }) => {

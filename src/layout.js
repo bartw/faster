@@ -4,7 +4,7 @@ import Nav from "./nav";
 
 const Layout = ({ loading, children }) => (
   <div className="p-4">
-    <header>
+    <header className="md:inline-block">
       <Link to="/">
         <h1 className="text-5xl font-extrabold">faster</h1>
       </Link>

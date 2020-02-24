@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useUser } from "./firebase";
 import LogOutButton from "./log-out-button";
 
@@ -9,35 +9,29 @@ const NavItem = ({ children }) => (
   </li>
 );
 
+const NavItemLink = ({ to, label }) => (
+  <NavItem>
+    <NavLink exact to={to} activeClassName="border-b-4 border-green-600">
+      {label}
+    </NavLink>
+  </NavItem>
+);
+
 const Nav = () => {
   const user = useUser();
 
   return (
-    <nav className="my-4">
+    <nav className="my-4 md:inline-block md:ml-8">
       <ul>
-        <NavItem>
-          <Link to="/">Home</Link>
-        </NavItem>
+        <NavItemLink to="/" label="Home" />
+        {!!user && <NavItemLink to="/scale" label="Scale" />}
         {!!user && (
-          <>
-            <NavItem>
-              <Link to="/scale">Scale</Link>
-            </NavItem>
-            <NavItem>
-              <LogOutButton />
-            </NavItem>
-          </>
+          <NavItem>
+            <LogOutButton />
+          </NavItem>
         )}
-        {!user && (
-          <>
-            <NavItem>
-              <Link to="/sign-up">Sign up</Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/log-in">Log in</Link>
-            </NavItem>
-          </>
-        )}
+        {!user && <NavItemLink to="/sign-up" label="Sign up" />}
+        {!user && <NavItemLink to="/log-in" label="Log in" />}
       </ul>
     </nav>
   );

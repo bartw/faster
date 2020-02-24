@@ -14,45 +14,42 @@ const SignUpForm = ({
   onSubmit,
   error
 }) => (
-  <div>
-    <h2>Sign up</h2>
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        onSubmit();
-      }}
-    >
-      <FormElement label="Email" htmlFor="email">
-        <Input
-          id="email"
-          type="email"
-          value={email}
-          onChange={setEmail}
-          placeholder="Email"
-        />
-      </FormElement>
-      <FormElement label="Password" htmlFor="password">
-        <Input
-          id="password"
-          type="password"
-          value={password}
-          onChange={setPassword}
-          placeholder="Password"
-        />
-      </FormElement>
-      <FormElement label="Confirm password" htmlFor="confirmPassword">
-        <Input
-          id="confirmPassword"
-          type="password"
-          value={confirmPassword}
-          onChange={setConfirmPassword}
-          placeholder="Confirm password"
-        />
-      </FormElement>
-      <Button type="submit">Sign up</Button>
-      {error && <div>{error}</div>}
-    </form>
-  </div>
+  <form
+    onSubmit={e => {
+      e.preventDefault();
+      onSubmit();
+    }}
+  >
+    <FormElement label="Email" htmlFor="email">
+      <Input
+        id="email"
+        type="email"
+        value={email}
+        onChange={setEmail}
+        placeholder="Email"
+      />
+    </FormElement>
+    <FormElement label="Password" htmlFor="password">
+      <Input
+        id="password"
+        type="password"
+        value={password}
+        onChange={setPassword}
+        placeholder="Password"
+      />
+    </FormElement>
+    <FormElement label="Confirm password" htmlFor="confirmPassword">
+      <Input
+        id="confirmPassword"
+        type="password"
+        value={confirmPassword}
+        onChange={setConfirmPassword}
+        placeholder="Confirm password"
+      />
+    </FormElement>
+    <Button type="submit">Sign up</Button>
+    {error && <div>{error}</div>}
+  </form>
 );
 
 const SignUpFormContainer = ({ history }) => {

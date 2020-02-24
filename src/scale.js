@@ -5,30 +5,27 @@ import Button from "./button";
 import Input from "./input";
 
 const ScaleForm = ({ weight, setWeight, onSubmit, error }) => (
-  <div>
-    <h2>Scale</h2>
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        onSubmit();
-      }}
-    >
-      <FormElement label="Weight" htmlFor="weight">
-        <Input
-          id="weight"
-          type="number"
-          value={weight}
-          onChange={setWeight}
-          placeholder="Weight"
-        />
-      </FormElement>
-      <Button type="submit">Submit</Button>
-      {!!error && <div>{error}</div>}
-    </form>
-  </div>
+  <form
+    onSubmit={e => {
+      e.preventDefault();
+      onSubmit();
+    }}
+  >
+    <FormElement label="Weight" htmlFor="weight">
+      <Input
+        id="weight"
+        type="number"
+        value={weight}
+        onChange={setWeight}
+        placeholder="Weight"
+      />
+    </FormElement>
+    <Button type="submit">Submit</Button>
+    {!!error && <div>{error}</div>}
+  </form>
 );
 
-const ScaleFormContainer = ({ history }) => {
+const ScaleFormContainer = () => {
   const firebase = useFirebase();
 
   const [weights, setWeights] = useState([]);
