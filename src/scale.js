@@ -4,8 +4,8 @@ import FormElement from "./form-element";
 import Button from "./button";
 import Input from "./input";
 
-const MIN = 0;
-const MAX = 180;
+const MIN = 40;
+const MAX = 160;
 const STEP = 0.1;
 
 const ScaleForm = ({ weight, setWeight, onSubmit, error }) => (
@@ -54,7 +54,7 @@ const ScaleFormContainer = () => {
 
   useEffect(() => {
     firebase.getLastWeight().then(lastWeight => {
-      setWeight(lastWeight ?? 75);
+      setWeight(lastWeight ?? 60);
       setLoading(false);
     });
   }, [firebase]);
