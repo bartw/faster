@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useFirebase } from "./firebase";
 import FormElement from "./form-element";
+import PressAndHoldButton from "./press-hold-button";
 import Button from "./button";
 
 const MIN = 40;
@@ -23,13 +24,13 @@ const ScaleForm = ({
   >
     <FormElement label="Weight" htmlFor="weight">
       <div className="border border-green-600 inline-block">
-        <button
+        <PressAndHoldButton
           type="button"
           className="text-gray-100 bg-green-600 px-4 py-2"
-          onClick={decreaseWeight}
+          onFire={decreaseWeight}
         >
           -
-        </button>
+        </PressAndHoldButton>
         <input
           id="weight"
           type="number"
@@ -43,13 +44,13 @@ const ScaleForm = ({
           placeholder="Weight"
           className="px-4 py-2"
         />
-        <button
+        <PressAndHoldButton
           type="button"
           className="text-gray-100 bg-green-600 px-4 py-2"
-          onClick={increaseWeight}
+          onFire={increaseWeight}
         >
           +
-        </button>
+        </PressAndHoldButton>
       </div>
     </FormElement>
     <Button type="submit">Submit</Button>
@@ -75,8 +76,8 @@ const ScaleFormContainer = () => {
     });
   }, [firebase]);
 
-  const decreaseWeight = () => {
-    const newWeight = weight - STEP;
+  const decreaseWeight = times => {
+    const newWeight = weight - STEP * times;
 
     if (newWeight < MIN) {
       setRoundedWeight(MIN);
@@ -86,9 +87,9 @@ const ScaleFormContainer = () => {
     setRoundedWeight(newWeight);
   };
 
-  const increaseWeight = () => {
-    const newWeight = weight + STEP;
-    
+  const increaseWeight = times => {
+    const newWeight = weight + STEP * times;
+
     if (newWeight > MAX) {
       setRoundedWeight(MAX);
       return;
