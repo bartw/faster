@@ -26,7 +26,7 @@ const ScaleForm = ({
       <div className="border border-green-600 inline-block">
         <PressAndHoldButton
           type="button"
-          className="text-gray-100 bg-green-600 px-4 py-2"
+          className="text-gray-100 bg-green-600 px-4 py-2 select-none"
           onFire={decreaseWeight}
         >
           -
@@ -46,7 +46,7 @@ const ScaleForm = ({
         />
         <PressAndHoldButton
           type="button"
-          className="text-gray-100 bg-green-600 px-4 py-2"
+          className="text-gray-100 bg-green-600 px-4 py-2 select-none"
           onFire={increaseWeight}
         >
           +
