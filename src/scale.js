@@ -2,13 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useFirebase } from "./firebase";
 import FormElement from "./form-element";
 import Button from "./button";
-import Input from "./input";
 
 const MIN = 40;
 const MAX = 160;
 const STEP = 0.1;
 
-const ScaleForm = ({ weight, setWeight, onSubmit, error }) => (
+const ScaleForm = ({
+  weight,
+  setWeight,
+  decreaseWeight,
+  increaseWeight,
+  onSubmit,
+  error
+}) => (
   <form
     onSubmit={e => {
       e.preventDefault();
@@ -16,29 +22,35 @@ const ScaleForm = ({ weight, setWeight, onSubmit, error }) => (
     }}
   >
     <FormElement label="Weight" htmlFor="weight">
-      <div>
+      <div className="border border-green-600 inline-block">
+        <button
+          type="button"
+          className="text-gray-100 bg-green-600 px-4 py-2"
+          onClick={decreaseWeight}
+        >
+          -
+        </button>
         <input
-          type="range"
+          id="weight"
+          type="number"
           value={weight}
           onChange={e => {
-            setWeight(e.currentTarget.value);
+            setWeight(+e.currentTarget.value);
           }}
           min={MIN}
           max={MAX}
           step={STEP}
-          className="w-full"
+          placeholder="Weight"
+          className="px-4 py-2"
         />
+        <button
+          type="button"
+          className="text-gray-100 bg-green-600 px-4 py-2"
+          onClick={increaseWeight}
+        >
+          +
+        </button>
       </div>
-      <Input
-        id="weight"
-        type="number"
-        value={weight}
-        onChange={setWeight}
-        min={MIN}
-        max={MAX}
-        step={STEP}
-        placeholder="Weight"
-      />
     </FormElement>
     <Button type="submit">Submit</Button>
     {!!error && <div>{error}</div>}
@@ -52,12 +64,38 @@ const ScaleFormContainer = () => {
   const [weight, setWeight] = useState(0);
   const [error, setError] = useState("");
 
+  const setRoundedWeight = newWeight => {
+    setWeight(Math.round(newWeight * 10) / 10);
+  };
+
   useEffect(() => {
     firebase.getLastWeight().then(lastWeight => {
-      setWeight(lastWeight ?? 60);
+      setRoundedWeight(lastWeight ?? 60);
       setLoading(false);
     });
   }, [firebase]);
+
+  const decreaseWeight = () => {
+    const newWeight = weight - STEP;
+
+    if (newWeight < MIN) {
+      setRoundedWeight(MIN);
+      return;
+    }
+
+    setRoundedWeight(newWeight);
+  };
+
+  const increaseWeight = () => {
+    const newWeight = weight + STEP;
+    
+    if (newWeight > MAX) {
+      setRoundedWeight(MAX);
+      return;
+    }
+
+    setRoundedWeight(newWeight);
+  };
 
   const handleSubmit = () => {
     setError(null);
@@ -73,7 +111,9 @@ const ScaleFormContainer = () => {
       {!loading && (
         <ScaleForm
           weight={weight}
-          setWeight={setWeight}
+          setWeight={setRoundedWeight}
+          decreaseWeight={decreaseWeight}
+          increaseWeight={increaseWeight}
           onSubmit={handleSubmit}
           error={error}
         />

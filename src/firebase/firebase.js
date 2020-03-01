@@ -84,7 +84,7 @@ class Firebase {
         if (!weights.length) {
           return null;
         }
-        return weights[0];
+        return +weights[0];
       });
 }
 
