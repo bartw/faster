@@ -3,9 +3,10 @@ import { useFirebase } from "./firebase";
 import FormElement from "./form-element";
 import Button from "./button";
 import Input from "./input";
-import Slider from "./slider";
 
+const MIN = 0;
 const MAX = 180;
+const STEP = 0.1;
 
 const ScaleForm = ({ weight, setWeight, onSubmit, error }) => (
   <form
@@ -15,14 +16,24 @@ const ScaleForm = ({ weight, setWeight, onSubmit, error }) => (
     }}
   >
     <FormElement label="Weight" htmlFor="weight">
+      <div>
+        <Input
+          type="range"
+          value={weight}
+          onChange={setWeight}
+          min={MIN}
+          max={MAX}
+          step={STEP}
+        />
+      </div>
       <Input
         id="weight"
         type="number"
         value={weight}
         onChange={setWeight}
-        min={0}
+        min={MIN}
         max={MAX}
-        step={0.1}
+        step={STEP}
         placeholder="Weight"
       />
     </FormElement>
@@ -57,15 +68,12 @@ const ScaleFormContainer = () => {
     <div>
       {loading && <span>Loading...</span>}
       {!loading && (
-        <>
-          <Slider value={weight} max={MAX} onChange={setWeight} />
-          <ScaleForm
-            weight={weight}
-            setWeight={setWeight}
-            onSubmit={handleSubmit}
-            error={error}
-          />
-        </>
+        <ScaleForm
+          weight={weight}
+          setWeight={setWeight}
+          onSubmit={handleSubmit}
+          error={error}
+        />
       )}
     </div>
   );
