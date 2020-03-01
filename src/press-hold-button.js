@@ -30,6 +30,8 @@ const PressAndHoldButton = ({ type, className, onFire, children }) => {
       type={type}
       onMouseDown={start}
       onMouseUp={stop}
+      onTouchStart={start}
+      onTouchEnd={stop}
     >
       {children}
     </button>
