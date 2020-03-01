@@ -71,6 +71,21 @@ class Firebase {
           };
         })
       );
+
+  getLastWeight = () =>
+    this.db
+      .collection("weights")
+      .where("userId", "==", this.user.uid)
+      .orderBy("timestamp", "desc")
+      .limit(1)
+      .get()
+      .then(snapshot => {
+        const weights = snapshot.docs.map(doc => doc.data().weight);
+        if (!weights.length) {
+          return null;
+        }
+        return weights[0];
+      });
 }
 
 export default Firebase;

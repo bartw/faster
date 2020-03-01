@@ -3,6 +3,9 @@ import { useFirebase } from "./firebase";
 import FormElement from "./form-element";
 import Button from "./button";
 import Input from "./input";
+import Slider from "./slider";
+
+const MAX = 180;
 
 const ScaleForm = ({ weight, setWeight, onSubmit, error }) => (
   <form
@@ -17,6 +20,9 @@ const ScaleForm = ({ weight, setWeight, onSubmit, error }) => (
         type="number"
         value={weight}
         onChange={setWeight}
+        min={0}
+        max={MAX}
+        step={0.1}
         placeholder="Weight"
       />
     </FormElement>
@@ -28,49 +34,39 @@ const ScaleForm = ({ weight, setWeight, onSubmit, error }) => (
 const ScaleFormContainer = () => {
   const firebase = useFirebase();
 
-  const [weights, setWeights] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [weight, setWeight] = useState(0);
   const [error, setError] = useState("");
 
-  const updateWeights = () => {
-    firebase.getWeights().then(weights => {
-      setWeights(weights);
-    });
-  };
-
   useEffect(() => {
-    updateWeights();
-  });
+    firebase.getLastWeight().then(lastWeight => {
+      setWeight(lastWeight ?? 75);
+      setLoading(false);
+    });
+  }, [firebase]);
 
   const handleSubmit = () => {
     setError(null);
 
-    firebase
-      .addWeight({ weight })
-      .then(() => {
-        updateWeights();
-      })
-      .catch(({ message }) => {
-        setError(message);
-      });
+    firebase.addWeight({ weight }).catch(({ message }) => {
+      setError(message);
+    });
   };
 
   return (
     <div>
-      <ScaleForm
-        weight={weight}
-        setWeight={setWeight}
-        onSubmit={handleSubmit}
-        error={error}
-      />
-      <ul>
-        {weights.map(({ weight, timestamp }) => (
-          <li key={timestamp.getTime()}>
-            <time>{timestamp.toString()}</time>
-            <div>{weight}</div>
-          </li>
-        ))}
-      </ul>
+      {loading && <span>Loading...</span>}
+      {!loading && (
+        <>
+          <Slider value={weight} max={MAX} onChange={setWeight} />
+          <ScaleForm
+            weight={weight}
+            setWeight={setWeight}
+            onSubmit={handleSubmit}
+            error={error}
+          />
+        </>
+      )}
     </div>
   );
 };

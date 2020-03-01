@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({ id, placeholder, type, value, onChange }) => (
+const Input = ({ id, placeholder, type, value, onChange, min, max, step }) => (
   <input
     id={id}
     name={id}
@@ -11,6 +11,9 @@ const Input = ({ id, placeholder, type, value, onChange }) => (
       onChange(e.currentTarget.value);
     }}
     placeholder={placeholder}
+    min={min}
+    max={max}
+    step={step}
   />
 );
 
