@@ -17,13 +17,16 @@ const ScaleForm = ({ weight, setWeight, onSubmit, error }) => (
   >
     <FormElement label="Weight" htmlFor="weight">
       <div>
-        <Input
+        <input
           type="range"
           value={weight}
-          onChange={setWeight}
+          onChange={e => {
+            setWeight(e.currentTarget.value);
+          }}
           min={MIN}
           max={MAX}
           step={STEP}
+          className="w-full"
         />
       </div>
       <Input
